@@ -37,7 +37,7 @@ def convert_to_lilypond(file_hash: str, midi_filename) -> str:
     if not os.path.isdir(os.path.join(LILYPOND_FOLDER)):
         os.makedirs(os.path.join(LILYPOND_FOLDER))
 
-    output_file = os.path.join(LILYPOND_FOLDER, f'midi_{file_hash}.mid')
+    output_file = os.path.join(LILYPOND_FOLDER, f'midi_{file_hash}.ly')
     subprocess.run(['python', lilypond_path, filename, '-o', output_file])
     return output_file
 
