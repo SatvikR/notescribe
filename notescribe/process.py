@@ -6,6 +6,7 @@ import os
 import json
 import hashlib
 from typing import List
+import shutil
 
 def process_file(file_hash, upload_filename) -> str:
     '''
@@ -46,8 +47,16 @@ def convert_to_midi(file_hash: str, upload_filename: str) -> str:
     # TODO: Call machine learning code
     print(f'Converting file {upload_filename} with hash {file_hash}')
 
+    path_to_input = os.path.join(UPLOAD_FOLDER, upload_filename)
+    output_filename = f'midi_{file_hash}.mid'
+    path_to_output = os.path.join(MIDI_FOLDER, output_filename)
+
+    # Returns a placeholder midi file
+    path_to_placeholder = os.path.join('object_storage', 'placeholder', 'placeholder.mid')
+    shutil.copyfile(path_to_placeholder, path_to_output)
+
     # Return example midi file
-    return 'midi_123456789abcdefexample.mid'
+    return output_filename
 
 def convert_to_lilypond(file_hash: str, midi_filename: str) -> str:
     '''
