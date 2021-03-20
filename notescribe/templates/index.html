@@ -12,7 +12,10 @@
   <hr />
   <div class="transcription">
     <h2>Transcribe your music</h2>
-    <input type="file" name="music" id="music" />
+    <form method="POST" enctype="multipart/form-data">
+      <input type="file" name="file" id="file" />
+      <input type="submit" value="Upload" />
+    </form>
   </div>
 </div>
 {% endblock main %}
