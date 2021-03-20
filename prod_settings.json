@@ -1,5 +1,8 @@
 {
   "port": 4000,
   "debug": false,
-  "host": "0.0.0.0"
+  "host": "0.0.0.0",
+  "s3_bucket": "notescribe",
+  "lilypond_converter_path": "/usr/bin/lilypond",
+  "lilypond_path": "/usr/bin/midi2ly"
 }
