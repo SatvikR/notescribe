@@ -21,12 +21,13 @@ def index():
         file.stream.seek(0)
         data = file.stream.read()
         file_hash = hashlib.sha1(data).hexdigest()
-
+        file.stream.seek(0)
         # Save file
         filename = f'upload_{file_hash}'
         if not os.path.isdir(os.path.join(app.config['UPLOAD_FOLDER'])):
             os.makedirs(os.path.join(app.config['UPLOAD_FOLDER']))
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        if not os.path.isfile(os.path.join(app.config['UPLOAD_FOLDER'], filename)):
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         print('upload successful')
         
         # Process file
