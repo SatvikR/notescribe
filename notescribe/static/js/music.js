@@ -20,18 +20,10 @@ const getData = (jsonUrl) => {
 	.then((res) => res.json())
 	.then((data) => {
 		document.getElementById("loading").remove();
-		console.log(data.image_urls)
+		document.getElementById('pdf').setAttribute('href', data.pdf_url)
+		document.getElementById('midi').setAttribute('href', data.midi_url)
 		imgs = data.image_urls;		
 		updateImage()
-
-		// const musicDiv = document.getElementById('music');
-		// for (let i = 0; i < data.image_urls.length; i++) {
-		// 	const img = document.createElement('img');
-		// 	img.src = data.image_urls[i];
-		// 	img.id = i;
-		// 	musicDiv.appendChild(img)
-		// 	musicDiv.appendChild(document.createElement('hr'))
-		// }
 	})
 }
 
