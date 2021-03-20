@@ -1,0 +1,36 @@
+{% extends 'base.html' %} {% block head %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/about.css') }}"
+/>
+{% endblock head %} {% block main %}
+<div class="title">
+  <h1>Welcome to Notescribe</h1>
+</div>
+<div class="description">
+  <h2>Who are we?</h2>
+  <p>
+    We are an open source project that aims to make music transcription easy.
+  </p>
+  <h2>How does this work?</h2>
+  <p>
+    Notescribe takes your music and runs it through a machine learning model
+    called a transformer, written in pytorch. Our transformer will convert your
+    music into the midi file format. We then take the midi, and convert it to
+    sheet music using lilypond. Then, we upload the sheet music to AWS s3 to
+    store, and give you the files to enjoy.
+  </p>
+  <h2>Contributers</h2>
+  <ul>
+    <li>
+      <a class="contributer" href="https://github.com/SatvikR">Satvik Reddy</a>
+    </li>
+    <li>
+      <a class="contributer" href="https://github.com/osbourn">Niels Voss</a>
+    </li>
+    <li>
+      <a class="contributer" href="https://github.com/soham1053">Soham Patil</a>
+    </li>
+  </ul>
+</div>
+{% endblock main %}

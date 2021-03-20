@@ -1,0 +1,8 @@
+.contributer {
+  text-decoration: none;
+  color: #3182ce;
+}
+
+.contributer:hover {
+  text-decoration: underline;
+}

@@ -1,0 +1,15 @@
+.home_title {
+  margin-bottom: 50px;
+}
+
+.home_title > h1 {
+  font-size: 50px;
+}
+
+.home_title > h2 {
+  color: #4a5568;
+}
+
+.transcription {
+  margin-top: 50px;
+}
