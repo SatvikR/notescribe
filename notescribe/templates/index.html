@@ -3,6 +3,7 @@
   rel="stylesheet"
   href="{{ url_for('static', filename='css/home.css') }}"
 />
+<script src="{{ url_for('static', filename='js/upload.js') }}"></script>
 {% endblock head %} {% block main %}
 <div class="container">
   <div class="home_title">
@@ -12,7 +13,11 @@
   <hr />
   <div class="transcription">
     <h2>Transcribe your music</h2>
-    <form method="POST" enctype="multipart/form-data">
+    <form
+      method="POST"
+      enctype="multipart/form-data"
+      onsubmit="return verifyUpload(this)"
+    >
       <input type="file" name="file" id="file" />
       <input type="submit" value="Upload" />
     </form>
