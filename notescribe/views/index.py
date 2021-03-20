@@ -1,6 +1,6 @@
 from notescribe import app
 from notescribe.process import process_file
-from flask import render_template, request
+from flask import render_template, request, redirect
 import hashlib
 import os.path
 import os
@@ -32,5 +32,6 @@ def index():
         # Process file
         result = process_file(file_hash, filename)
         print(f"Result: {result}")
-        return render_template('index.html', message='File processed')
+        return redirect(f'/music?url={result}')
+        # return render_template('index.html', message='File processed')
     return render_template('index.html')
