@@ -1,3 +1,6 @@
-from notescribe import app
+from notescribe import app, settings
 
-app.run(port=4000, debug=True)
+port = settings['port']
+debug = settings['debug']
+
+app.run(port=port, debug=debug)
