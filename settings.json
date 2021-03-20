@@ -2,6 +2,7 @@
   "port": 4000,
   "debug": true,
   "host": "127.0.0.1",
-  "lilypond_path": "C:\\Program Files (x86)\\LilyPond\\usr\\bin\\midi2ly",
+  "lilypond_converter_path": "C:\\Program Files (x86)\\LilyPond\\usr\\bin\\midi2ly",
+  "lilypond_path": "C:\\Program Files (x86)\\LilyPond\\usr\\bin\\lilypond.exe",
   "s3_bucket": "mybucket"
 }

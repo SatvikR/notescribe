@@ -1,4 +1,4 @@
-from notescribe import UPLOAD_FOLDER, settings, MIDI_FOLDER, LILYPOND_FOLDER
+from notescribe import settings, UPLOAD_FOLDER, MIDI_FOLDER, LILYPOND_FOLDER, IMAGES_FOLDER
 import subprocess
 import os.path
 import os
@@ -14,12 +14,14 @@ def process_file(file_hash, upload_filename) -> bool:
     print(f'midi_filename: {midi_filename}')
     lilypond_filename = convert_to_lilypond(file_hash, midi_filename)
     print(f'lilypond_filename: {lilypond_filename}')
-    delete_file_success = delete_file(upload_filename)
+    image_folder = generate_images(file_hash, lilypond_filename)
+    print(f'image_folder: {image_folder}')
+    delete_file_success = delete_file(os.path.join(UPLOAD_FOLDER, upload_filename))
     print('upload deleted' if delete_file_success else 'upload failed to be deleted')
 
     return False
 
-def convert_to_midi(file_hash: str, upload_filename) -> str:
+def convert_to_midi(file_hash: str, upload_filename: str) -> str:
     '''
     Converts a user uploaded file to midi.
     Returns True upon success, False otherwise
@@ -30,20 +32,34 @@ def convert_to_midi(file_hash: str, upload_filename) -> str:
     # Return example midi file
     return 'midi_123456789abcdefexample.mid'
 
-def convert_to_lilypond(file_hash: str, midi_filename) -> str:
+def convert_to_lilypond(file_hash: str, midi_filename: str) -> str:
     filename = os.path.join(MIDI_FOLDER, midi_filename)
 
-    lilypond_path = settings['lilypond_path']
+    lilypond_converter_path = settings['lilypond_converter_path']
     if not os.path.isdir(os.path.join(LILYPOND_FOLDER)):
         os.makedirs(os.path.join(LILYPOND_FOLDER))
 
-    output_file = os.path.join(LILYPOND_FOLDER, f'midi_{file_hash}.ly')
-    subprocess.run(['python', lilypond_path, filename, '-o', output_file])
-    return output_file
+    output_filename = f'lilypond_{file_hash}.ly'
+    output_file = os.path.join(LILYPOND_FOLDER, output_filename) 
+    subprocess.run(['python', lilypond_converter_path, filename, '-o', output_file])
+    return output_filename
+
+def generate_images(file_hash: str, lilypond_filename: str) -> str:
+    lilypond_path = settings['lilypond_path']
+    output_dir = os.path.join(IMAGES_FOLDER, file_hash)
+    print(lilypond_path)
+    if not os.path.isdir(output_dir):
+        os.makedirs(output_dir)
+    subprocess.run([lilypond_path, '-fpng', '-o', output_dir, os.path.join(LILYPOND_FOLDER, lilypond_filename)])
+
+    # Remove extra copy of midi file that lilypond generates automatically
+    assert delete_file(os.path.join(output_dir, lilypond_filename[:-3] + '.mid'))
+
+    return output_dir
 
 def delete_file(filename: str) -> bool:
     try:
-        os.remove(os.path.join(UPLOAD_FOLDER, filename))
+        os.remove(filename)
         return True
     except:
         return False

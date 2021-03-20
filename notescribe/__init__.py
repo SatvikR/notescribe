@@ -5,6 +5,7 @@ import os.path
 UPLOAD_FOLDER = os.path.join('object_storage', 'uploads')
 MIDI_FOLDER = os.path.join('object_storage', 'midi')
 LILYPOND_FOLDER = os.path.join('object_storage', 'lilypond')
+IMAGES_FOLDER = os.path.join('object_storage', 'images')
 
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 app = Flask(__name__)
