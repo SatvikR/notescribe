@@ -78,6 +78,9 @@ def convert_to_midi(file_hash: str, wav_filename: str) -> str:
     output_filename = f'midi_{file_hash}.mid'
     path_to_output = os.path.join(MIDI_FOLDER, output_filename)
 
+    if not os.path.isdir(os.path.join(MIDI_FOLDER)):
+        os.makedirs(os.path.join(MIDI_FOLDER))
+
     # Returns a placeholder midi file
     path_to_placeholder = os.path.join('object_storage', 'placeholder', 'placeholder.mid')
     shutil.copyfile(path_to_placeholder, path_to_output)
