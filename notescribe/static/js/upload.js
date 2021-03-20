@@ -1,7 +1,7 @@
 /**
  *
  * @param {FormData} form
- * @returns {Boolean}
+ * @returns {boolean}
  */
 const verifyUpload = (form) => {
   // add file verification here

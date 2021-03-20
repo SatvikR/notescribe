@@ -12,6 +12,9 @@
   </div>
   <hr />
   <div class="transcription">
+    {% if message %}
+    <p>{{message}}</p>
+    {% endif %}
     <h2>Transcribe your music</h2>
     <form
       method="POST"
