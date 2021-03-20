@@ -1,8 +1,9 @@
-from notescribe import settings, UPLOAD_FOLDER, MIDI_FOLDER, LILYPOND_FOLDER, IMAGES_FOLDER
+from notescribe import settings, UPLOAD_FOLDER, MIDI_FOLDER, LILYPOND_FOLDER, IMAGES_FOLDER, JSON_FOLDER
 from notescribe.s3_upload import upload_file, get_url
 import subprocess
 import os.path
 import os
+import json
 import hashlib
 from typing import List
 
@@ -22,6 +23,12 @@ def process_file(file_hash, upload_filename) -> bool:
     print(f'midi_url: {midi_url}')
     image_urls = process_images(image_folder)
     print(f'image_urls: {image_urls}')
+    json_data = {
+        "midi_url": midi_url,
+        "image_urls": image_urls
+    }
+    json_url = package_json(file_hash, json_data)
+    print(f'json_url: {json_url}')
     delete_file_success = delete_file(os.path.join(UPLOAD_FOLDER, upload_filename))
     print('upload deleted' if delete_file_success else 'upload failed to be deleted')
 
@@ -73,7 +80,7 @@ def generate_images(file_hash: str, lilypond_filename: str) -> str:
     subprocess.run([lilypond_path, '-fpng', '-o', output_dir, os.path.join(LILYPOND_FOLDER, lilypond_filename)])
 
     # Remove extra copy of midi file that lilypond generates automatically
-    assert delete_file(os.path.join(output_dir, lilypond_filename[:-3] + '.mid'))
+    delete_file(os.path.join(output_dir, lilypond_filename[:-3] + '.mid'))
 
     return output_dir
 
@@ -108,6 +115,22 @@ def upload_midi(file_hash: str, midi_filename: str) -> str:
     upload_file(filename, s3_object_name, True)
     return get_url(s3_object_name)
 
+def package_json(file_hash: str, data: json) -> str:
+    '''
+    Uploads json data to S3
+    :param file_hash: SHA-1 hash of the user uploaded file
+    :param data: JSON data to upload
+    :returns: URL to uploaded json data
+    '''
+    if not os.path.isdir(os.path.join(JSON_FOLDER)):
+        os.makedirs(os.path.join(JSON_FOLDER))
+    filename = os.path.join(JSON_FOLDER, f'{file_hash}.json')
+    with open(filename, 'w') as f:
+        json.dump(data, f)
+    s3_object_name = f'json/{file_hash}.json'
+    upload_file(filename, s3_object_name, True)
+    delete_file(filename)
+    return get_url(s3_object_name)
 
 def delete_file(filename: str) -> bool:
     try:
