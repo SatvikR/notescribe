@@ -3,6 +3,7 @@ from flask import Flask
 import os.path
 
 UPLOAD_FOLDER = os.path.join('object_storage', 'uploads')
+WAV_FOLDER = os.path.join('object_storage', 'wav')
 MIDI_FOLDER = os.path.join('object_storage', 'midi')
 LILYPOND_FOLDER = os.path.join('object_storage', 'lilypond')
 IMAGES_FOLDER = os.path.join('object_storage', 'images')

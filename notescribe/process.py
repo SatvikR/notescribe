@@ -1,5 +1,6 @@
-from notescribe import settings, UPLOAD_FOLDER, MIDI_FOLDER, LILYPOND_FOLDER, IMAGES_FOLDER, JSON_FOLDER
+from notescribe import settings, UPLOAD_FOLDER, WAV_FOLDER, MIDI_FOLDER, LILYPOND_FOLDER, IMAGES_FOLDER, JSON_FOLDER
 from notescribe.s3_upload import upload_file, get_url
+from pydub import AudioSegment
 import subprocess
 import os.path
 import os
@@ -17,7 +18,8 @@ def process_file(file_hash, upload_filename) -> str:
     '''
     print(f'Processing file {upload_filename} with hash {file_hash}')
     
-    midi_filename = convert_to_midi(file_hash, upload_filename)
+    wav_filename = convert_to_wav(file_hash, upload_filename, 'mp3')
+    midi_filename = convert_to_midi(file_hash, wav_filename)
     lilypond_filename = convert_to_lilypond(file_hash, midi_filename)
     image_folder = generate_images(file_hash, lilypond_filename)
     midi_url = upload_midi(file_hash, midi_filename)
@@ -37,17 +39,37 @@ def process_file(file_hash, upload_filename) -> str:
 
     return json_url
 
-def convert_to_midi(file_hash: str, upload_filename: str) -> str:
+def convert_to_wav(file_hash: str, upload_filename: str, input_format: str) -> str:
     '''
-    Converts a user uploaded file to midi.
+    Converts a user uploaded file to WAV format.
     :param file_hash: SHA-1 hash of the user uploaded file
-    :param upload_filename: Filename (excluding path) of the uploaded file to convert
+    :param upload_filename: Filename (excluding path) of the user uploaded file
+    :param input_format: The audio format (e.g. "mp3") to convert
+    :return: Filename (excluding path) of the newly created wav file
+    '''
+    if not os.path.isdir(os.path.join(WAV_FOLDER)):
+        os.makedirs(os.path.join(WAV_FOLDER))
+
+    path_to_input = os.path.join(UPLOAD_FOLDER, upload_filename)
+    output_filename = f'wav_{file_hash}.wav'
+    path_to_output = os.path.join(WAV_FOLDER, output_filename)
+    
+    input_audio = AudioSegment.from_file(path_to_input, format=input_format)
+    input_audio.export(path_to_output, format="wav")
+    
+    return output_filename
+
+def convert_to_midi(file_hash: str, wav_filename: str) -> str:
+    '''
+    Converts a wav file to midi.
+    :param file_hash: SHA-1 hash of the user uploaded file
+    :param wav_filename: Filename (excluding path) of the wav file to convert
     :returns: Filename (excluding path) of the newly created midi file
     '''
     # TODO: Call machine learning code
-    print(f'Converting file {upload_filename} with hash {file_hash}')
+    print(f'Converting file {wav_filename} with hash {file_hash}')
 
-    path_to_input = os.path.join(UPLOAD_FOLDER, upload_filename)
+    path_to_input = os.path.join(UPLOAD_FOLDER, wav_filename)
     output_filename = f'midi_{file_hash}.mid'
     path_to_output = os.path.join(MIDI_FOLDER, output_filename)
 
