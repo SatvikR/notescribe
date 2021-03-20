@@ -9,16 +9,17 @@ import hashlib
 from typing import List
 import shutil
 
-def process_file(file_hash, upload_filename) -> str:
+def process_file(file_hash: str, upload_filename: str, audio_format: str) -> str:
     '''
     Processes a user uploaded file so that it can be sent to the client
     :param file_hash: SHA-1 hash of the user uploaded file
     :param upload_filename: Filename (excluding path) of the user uploaded file
+    :param audio_format: Audio format used to convert to WAV
     :returns: URL to the json document containing locations of media assets, or None if audio decoding fails
     '''
     print(f'Processing file {upload_filename} with hash {file_hash}')
     try:
-        wav_filename = convert_to_wav(file_hash, upload_filename, 'mp3')
+        wav_filename = convert_to_wav(file_hash, upload_filename, audio_format)
     except Exception as e:
         print(e)
         return None

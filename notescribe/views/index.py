@@ -15,12 +15,15 @@ def index():
 
         # If user uploaded file
         file = request.files['file']
-        
         # Calculate SHA-1 hash of file
         file.stream.seek(0)
         data = file.stream.read()
         file_hash = hashlib.sha1(data).hexdigest()
         file.stream.seek(0)
+
+        filename: str = file.filename
+        audio_format = filename.split('.')[-1]
+
         # Save file
         filename = f'upload_{file_hash}'
         if not os.path.isdir(os.path.join(app.config['UPLOAD_FOLDER'])):
@@ -30,7 +33,7 @@ def index():
         print('upload successful')
         
         # Process file
-        result = process_file(file_hash, filename)
+        result = process_file(file_hash, filename, audio_format)
         print(f"Result: {result}")
         return redirect(f'/music?url={result}')
         # return render_template('index.html', message='File processed')
