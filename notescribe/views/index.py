@@ -1,7 +1,6 @@
 from notescribe import app
 from notescribe.process import process_file
 from flask import render_template, request
-from werkzeug.utils import secure_filename
 import hashlib
 import os.path
 import os

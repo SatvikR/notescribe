@@ -12,3 +12,5 @@ __pycache__/
 .history/
 
 object_storage/
+
+.env
