@@ -23,7 +23,13 @@ def process_file(file_hash, upload_filename) -> bool:
         "image_urls": image_urls
     }
     json_url = package_json(file_hash, json_data)
-    delete_file_success = delete_file(os.path.join(UPLOAD_FOLDER, upload_filename))
+    
+    for f in [
+        os.path.join(UPLOAD_FOLDER, upload_filename),
+        os.path.join(MIDI_FOLDER, midi_filename),
+        os.path.join(LILYPOND_FOLDER, lilypond_filename)
+    ]:
+        delete_file(f)
 
     return False
 
