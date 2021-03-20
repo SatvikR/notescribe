@@ -31,6 +31,6 @@ def index():
         
         # Process file
         result = process_file(file_hash, filename)
-        print('successfully processed file' if result else 'failed to process file')
+        print(f"Result: {result}")
         return render_template('index.html', message='File processed')
     return render_template('index.html')

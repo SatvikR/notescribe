@@ -7,9 +7,12 @@ import json
 import hashlib
 from typing import List
 
-def process_file(file_hash, upload_filename) -> bool:
+def process_file(file_hash, upload_filename) -> str:
     '''
-    Processes a user upload file so that it can be sent to the client
+    Processes a user uploaded file so that it can be sent to the client
+    :param file_hash: SHA-1 hash of the user uploaded file
+    :param upload_filename: Filename (excluding path) of the user uploaded file
+    :returns: URL to the json document containing locations of media assets
     '''
     print(f'Processing file {upload_filename} with hash {file_hash}')
     
@@ -23,7 +26,7 @@ def process_file(file_hash, upload_filename) -> bool:
         "image_urls": image_urls
     }
     json_url = package_json(file_hash, json_data)
-    
+
     for f in [
         os.path.join(UPLOAD_FOLDER, upload_filename),
         os.path.join(MIDI_FOLDER, midi_filename),
@@ -31,7 +34,7 @@ def process_file(file_hash, upload_filename) -> bool:
     ]:
         delete_file(f)
 
-    return False
+    return json_url
 
 def convert_to_midi(file_hash: str, upload_filename: str) -> str:
     '''
