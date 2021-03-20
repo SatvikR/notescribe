@@ -17,17 +17,21 @@ else:
     s3_client = boto3.client('s3')
 del _aws_auth_key, _aws_secret_key
 
-def upload_file(file_path: str, s3_path: str) -> bool:
+def upload_file(file_path: str, s3_path: str, make_public=False) -> bool:
     '''
     Uploads a file to an S3 bucket
     
     :param file_path: Path to file to upload
     :param s3_path: S3 object name to upload to (e.g. myfolder/myfile)
+    :param make_public: If True, then the uploaded file will be made public
     :return: True if the file was uploaded, otherwise False
     '''
 
     try:
-        response = s3_client.upload_file(file_path, s3_bucket_name, s3_path)
+        if make_public:
+            s3_client.upload_file(file_path, s3_bucket_name, s3_path, ExtraArgs={'ACL': 'public-read'})
+        else:
+            s3_client.upload_file(file_path, s3_bucket_name, s3_path)
     except ClientError as e:
         logging.error(e)
         return False

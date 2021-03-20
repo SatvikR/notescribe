@@ -91,7 +91,7 @@ def process_images(image_directory_path: str) -> List[str]:
         with open(path_to_image, 'rb') as f:
            image_hash = hashlib.sha1(f.read()).hexdigest()
         s3_object_name = f'images/{image_hash}.png'
-        upload_file(path_to_image, s3_object_name)
+        upload_file(path_to_image, s3_object_name, True)
         delete_file(path_to_image)
         image_urls.append(get_url(s3_object_name))
     os.rmdir(image_directory_path)
@@ -105,7 +105,7 @@ def upload_midi(file_hash: str, midi_filename: str) -> str:
     '''
     filename = os.path.join(MIDI_FOLDER, midi_filename)
     s3_object_name = f'midi/{file_hash}.mid'
-    upload_file(filename, s3_object_name)
+    upload_file(filename, s3_object_name, True)
     return get_url(s3_object_name)
 
 
