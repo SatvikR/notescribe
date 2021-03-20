@@ -1,3 +1,39 @@
 body * {
 	font-family: 'Inter', sans-serif;
 }
+
+body {
+	margin: 0;
+}
+
+.navbar {
+	margin: 0;
+	display: flex;
+	width: 100%;
+	background-color: #1A202C;
+	padding: 16px;
+}
+
+.navbar > a {
+	margin-bottom: auto;
+	margin-top: auto;
+	margin-left: 10px;
+	text-decoration: none;
+	color: white;
+}
+
+.navbar > a:hover {
+	color: #CBD5E0;
+}
+
+.title {
+	text-align: center;
+	font-size: 30px;
+}
+
+.description {
+    max-width: 800px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
