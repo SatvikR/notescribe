@@ -24,7 +24,9 @@ def process_file(file_hash, upload_filename) -> bool:
 def convert_to_midi(file_hash: str, upload_filename: str) -> str:
     '''
     Converts a user uploaded file to midi.
-    Returns True upon success, False otherwise
+    :param file_hash: SHA-1 hash of the user uploaded file
+    :param upload_filename: Filename (excluding path) of the uploaded file to convert
+    :returns: Filename (excluding path) of the newly created midi file
     '''
     # TODO: Call machine learning code
     print(f'Converting file {upload_filename} with hash {file_hash}')
@@ -33,6 +35,12 @@ def convert_to_midi(file_hash: str, upload_filename: str) -> str:
     return 'midi_123456789abcdefexample.mid'
 
 def convert_to_lilypond(file_hash: str, midi_filename: str) -> str:
+    '''
+    Converts a midi file to lilypond.
+    :param file_hash: SHA-1 hash of the user uploaded file
+    :param upload_filename: Filename (excluding path) of the midi file to convert
+    :returns: Filename (excluding path) of the newly created lilypond file
+    '''
     filename = os.path.join(MIDI_FOLDER, midi_filename)
 
     lilypond_converter_path = settings['lilypond_converter_path']
@@ -45,6 +53,12 @@ def convert_to_lilypond(file_hash: str, midi_filename: str) -> str:
     return output_filename
 
 def generate_images(file_hash: str, lilypond_filename: str) -> str:
+    '''
+    Converts a lilypond file to a set of images.
+    :param file_hash: SHA-1 hash of the user uploaded file
+    :param upload_filename: Filename (excluding path) of the lilypond file to convert
+    :returns: Path to the directory where images are stored
+    '''
     lilypond_path = settings['lilypond_path']
     output_dir = os.path.join(IMAGES_FOLDER, file_hash)
     print(lilypond_path)
