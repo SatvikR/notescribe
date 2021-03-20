@@ -1,7 +1,7 @@
 # notescribe
 Open source music transcriber made for DVHacks |||
 
-Contributers:
+Contributors:
 
 - Satvik Reddy
 - Niels Voss
