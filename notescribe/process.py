@@ -14,23 +14,16 @@ def process_file(file_hash, upload_filename) -> bool:
     print(f'Processing file {upload_filename} with hash {file_hash}')
     
     midi_filename = convert_to_midi(file_hash, upload_filename)
-    print(f'midi_filename: {midi_filename}')
     lilypond_filename = convert_to_lilypond(file_hash, midi_filename)
-    print(f'lilypond_filename: {lilypond_filename}')
     image_folder = generate_images(file_hash, lilypond_filename)
-    print(f'image_folder: {image_folder}')
     midi_url = upload_midi(file_hash, midi_filename)
-    print(f'midi_url: {midi_url}')
     image_urls = process_images(image_folder)
-    print(f'image_urls: {image_urls}')
     json_data = {
         "midi_url": midi_url,
         "image_urls": image_urls
     }
     json_url = package_json(file_hash, json_data)
-    print(f'json_url: {json_url}')
     delete_file_success = delete_file(os.path.join(UPLOAD_FOLDER, upload_filename))
-    print('upload deleted' if delete_file_success else 'upload failed to be deleted')
 
     return False
 
@@ -74,7 +67,6 @@ def generate_images(file_hash: str, lilypond_filename: str) -> str:
     '''
     lilypond_path = settings['lilypond_path']
     output_dir = os.path.join(IMAGES_FOLDER, file_hash)
-    print(lilypond_path)
     if not os.path.isdir(output_dir):
         os.makedirs(output_dir)
     subprocess.run([lilypond_path, '-fpng', '-o', output_dir, os.path.join(LILYPOND_FOLDER, lilypond_filename)])
