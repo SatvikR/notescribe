@@ -14,11 +14,14 @@ def process_file(file_hash, upload_filename) -> str:
     Processes a user uploaded file so that it can be sent to the client
     :param file_hash: SHA-1 hash of the user uploaded file
     :param upload_filename: Filename (excluding path) of the user uploaded file
-    :returns: URL to the json document containing locations of media assets
+    :returns: URL to the json document containing locations of media assets, or None if audio decoding fails
     '''
     print(f'Processing file {upload_filename} with hash {file_hash}')
-    
-    wav_filename = convert_to_wav(file_hash, upload_filename, 'mp3')
+    try:
+        wav_filename = convert_to_wav(file_hash, upload_filename, 'mp3')
+    except Exception as e:
+        print(e)
+        return None
     midi_filename = convert_to_midi(file_hash, wav_filename)
     lilypond_filename = convert_to_lilypond(file_hash, midi_filename)
     image_folder = generate_images(file_hash, lilypond_filename)
@@ -32,6 +35,7 @@ def process_file(file_hash, upload_filename) -> str:
 
     for f in [
         os.path.join(UPLOAD_FOLDER, upload_filename),
+        os.path.join(WAV_FOLDER, wav_filename),
         os.path.join(MIDI_FOLDER, midi_filename),
         os.path.join(LILYPOND_FOLDER, lilypond_filename)
     ]:
