@@ -7,6 +7,7 @@ WAV_FOLDER = os.path.join('object_storage', 'wav')
 MIDI_FOLDER = os.path.join('object_storage', 'midi')
 LILYPOND_FOLDER = os.path.join('object_storage', 'lilypond')
 IMAGES_FOLDER = os.path.join('object_storage', 'images')
+PDF_FOLDER = os.path.join('object_storage', 'pdf')
 JSON_FOLDER = os.path.join('object_storage', 'json')
 
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}

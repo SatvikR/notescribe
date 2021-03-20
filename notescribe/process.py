@@ -1,4 +1,4 @@
-from notescribe import settings, UPLOAD_FOLDER, WAV_FOLDER, MIDI_FOLDER, LILYPOND_FOLDER, IMAGES_FOLDER, JSON_FOLDER
+from notescribe import settings, UPLOAD_FOLDER, WAV_FOLDER, MIDI_FOLDER, LILYPOND_FOLDER, IMAGES_FOLDER, PDF_FOLDER, JSON_FOLDER
 from notescribe.s3_upload import upload_file, get_url
 from pydub import AudioSegment
 import subprocess
@@ -6,6 +6,7 @@ import os.path
 import os
 import json
 import hashlib
+from fpdf import FPDF
 from typing import List
 import shutil
 
@@ -27,9 +28,11 @@ def process_file(file_hash: str, upload_filename: str, audio_format: str) -> str
     lilypond_filename = convert_to_lilypond(file_hash, midi_filename)
     image_folder = generate_images(file_hash, lilypond_filename)
     midi_url = upload_midi(file_hash, midi_filename)
+    pdf_url = package_pdf(file_hash, image_folder)
     image_urls = process_images(image_folder)
     json_data = {
         "midi_url": midi_url,
+        "pdf_url": pdf_url,
         "image_urls": image_urls
     }
     json_url = package_json(file_hash, json_data)
@@ -153,6 +156,29 @@ def upload_midi(file_hash: str, midi_filename: str) -> str:
     filename = os.path.join(MIDI_FOLDER, midi_filename)
     s3_object_name = f'midi/{file_hash}.mid'
     upload_file(filename, s3_object_name, True)
+    return get_url(s3_object_name)
+
+def package_pdf(file_hash: str, image_directory_path: str) -> str:
+    '''
+    Packages images into a pdf and uploads to S3
+
+    :param file_hash: SHA-1 hash of the user uploaded file
+    :param image_directory_path: Path to the directory where the images are stored
+    :returns: S3 url of pdf file
+    '''
+    if not os.path.isdir(os.path.join(PDF_FOLDER)):
+        os.makedirs(os.path.join(PDF_FOLDER))
+    path_to_output_pdf = os.path.join(PDF_FOLDER, f'pdf_{file_hash}.pdf')
+    image_filenames = os.listdir(image_directory_path)
+    pdf_data = FPDF()
+    for image in image_filenames:
+        path_to_image = os.path.join(image_directory_path, image)
+        pdf_data.add_page()
+        pdf_data.image(path_to_image, 0, 0, 210, 297)
+    pdf_data.output(path_to_output_pdf, "F")
+    s3_object_name = f'pdf/{file_hash}.pdf'
+    upload_file(path_to_output_pdf, s3_object_name, True)
+    delete_file(path_to_output_pdf)
     return get_url(s3_object_name)
 
 def package_json(file_hash: str, data: json) -> str:
