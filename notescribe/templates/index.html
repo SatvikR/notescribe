@@ -21,10 +21,14 @@
       enctype="multipart/form-data"
       onsubmit="return verifyUpload(this)"
     >
-      <input type="file" name="file" id="file" />
-      <button type="submit" value="Upload">
+    <div class="form_div">
+      <input type="file" name="file" id="file" class="form_file"/>
+      <label for="file" class="form_label">Choose a file</label>
+      <button type="submit" value="Upload" class="form_button">
         <img src="{{ url_for('static', filename='images/upload-black.svg') }}" />
-      </button></form>
+      </button>
+    </div>
+      </form>
     </form>
   </div>
 </div>

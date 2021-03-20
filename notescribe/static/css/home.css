@@ -13,3 +13,48 @@
 .transcription {
   margin-top: 50px;
 }
+
+.form_button {
+  padding: 16px;
+  border: none;
+  background-color: #4FD1C5; 
+  border-radius: 5px;
+}
+
+.form_button > img {
+  -webkit-filter: invert(100%); /* safari 6.0 - 9.0 */
+  filter: invert(100%);
+}
+
+.form_file {
+  width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.form_div {
+  display: flex;
+  padding:0;
+}
+
+.form_label {
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-right: 16px;
+  padding: 16px 24px;
+  border-radius: 5px;
+  background-color: #4FD1C5;
+  color: white;
+  font-weight: bold;
+}
+
+.form_label:hover {
+  cursor: pointer;
+}
+
+.form_button:hover {
+  cursor: pointer;
+}
