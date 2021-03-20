@@ -1,7 +1,10 @@
 from notescribe import settings, UPLOAD_FOLDER, MIDI_FOLDER, LILYPOND_FOLDER, IMAGES_FOLDER
+from notescribe.s3_upload import upload_file, get_url
 import subprocess
 import os.path
 import os
+import hashlib
+from typing import List
 
 def process_file(file_hash, upload_filename) -> bool:
     '''
@@ -16,6 +19,8 @@ def process_file(file_hash, upload_filename) -> bool:
     print(f'lilypond_filename: {lilypond_filename}')
     image_folder = generate_images(file_hash, lilypond_filename)
     print(f'image_folder: {image_folder}')
+    image_urls = process_images(image_folder)
+    print(f'image_urls: {image_urls}')
     delete_file_success = delete_file(os.path.join(UPLOAD_FOLDER, upload_filename))
     print('upload deleted' if delete_file_success else 'upload failed to be deleted')
 
@@ -70,6 +75,26 @@ def generate_images(file_hash: str, lilypond_filename: str) -> str:
     assert delete_file(os.path.join(output_dir, lilypond_filename[:-3] + '.mid'))
 
     return output_dir
+
+def process_images(image_directory_path: str) -> List[str]:
+    '''
+    Uploads and deletes local copies of the images in the directory
+    :param image_directory_path: Path to the directory where the images are stored
+    :returns: List of image urls
+    '''
+    image_filenames = os.listdir(image_directory_path)
+    image_urls = []
+    for image in image_filenames:
+        path_to_image = os.path.join(image_directory_path, image)
+        image_hash = None
+        with open(path_to_image, 'rb') as f:
+           image_hash = hashlib.sha1(f.read()).hexdigest()
+        s3_object_name = f'images/{image_hash}.png'
+        upload_file(path_to_image, s3_object_name)
+        delete_file(path_to_image)
+        image_urls.append(get_url(s3_object_name))
+    os.rmdir(image_directory_path)
+    return image_urls
 
 def delete_file(filename: str) -> bool:
     try:

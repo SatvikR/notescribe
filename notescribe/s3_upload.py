@@ -32,3 +32,12 @@ def upload_file(file_path: str, s3_path: str) -> bool:
         logging.error(e)
         return False
     return True
+
+def get_url(s3_path: str) -> str:
+    '''
+    Gets the web url of the specified s3 object
+    
+    :param s3_path: S3 object name to get url of (e.g. myfolder/myfile)
+    :return: The url ofthe provided object
+    '''
+    return f"https://{s3_bucket_name}.s3.amazonaws.com/{s3_path}"
