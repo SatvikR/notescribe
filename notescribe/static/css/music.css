@@ -1,0 +1,30 @@
+h1 {
+	text-align: center;
+}
+
+#current {
+	width: 75%;
+	height: auto;
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+}
+
+.button_container > div > button {
+	color: white;
+	text-align: center;
+	padding: 8px 12px;
+	background-color: #4299E1;
+	border: none;
+	border-radius: 5px;
+}
+
+.button_container > div > button:hover {
+	background-color: blue;
+	cursor: pointer;
+}
+
+.button_container {
+	display: flex;
+	justify-content: space-around;
+}

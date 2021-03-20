@@ -1,4 +1,8 @@
 {% extends 'base.html' %} {% block head %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/music.css') }}"
+/>
 <script src="{{ url_for('static', filename='js/music.js') }}"></script>
 {% endblock head %} {% block main %}
 <div class="container">
@@ -6,6 +10,13 @@
 	<div id="loading">
 		<h2>Loading...</h2>
 	</div>
-	<div id="music"></div>
+	<div class="button_container">
+		<div>
+			<button onclick="previousPage()">&lt</button>
+			<button onclick="nextPage()">&gt</button>
+		</div>
+	</div>
+	<div id="music">
+	</div>
 </div>
 {% endblock main %}
