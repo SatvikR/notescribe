@@ -8,11 +8,6 @@ import os
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
-        # Normal webpage access
-        if 'file' not in request.files:
-            print('no file')
-            return render_template('index.html')
-
         # If user uploaded file
         file = request.files['file']
         # Calculate SHA-1 hash of file

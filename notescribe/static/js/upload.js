@@ -15,6 +15,9 @@ removeFormVerification();
  * @return {boolean}
  */
 const verifyUpload = (form) => {
-  // add file verification here
+  if (form.file.value === '') {
+    alert('No file selected.')
+    return false;
+  }
   return true;
 };
