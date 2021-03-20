@@ -12,13 +12,14 @@ def process_file(file_hash, upload_filename) -> bool:
     '''
     print(f'Processing file {upload_filename} with hash {file_hash}')
     
-    # Convert to midi
     midi_filename = convert_to_midi(file_hash, upload_filename)
     print(f'midi_filename: {midi_filename}')
     lilypond_filename = convert_to_lilypond(file_hash, midi_filename)
     print(f'lilypond_filename: {lilypond_filename}')
     image_folder = generate_images(file_hash, lilypond_filename)
     print(f'image_folder: {image_folder}')
+    midi_url = upload_midi(file_hash, midi_filename)
+    print(f'midi_url: {midi_url}')
     image_urls = process_images(image_folder)
     print(f'image_urls: {image_urls}')
     delete_file_success = delete_file(os.path.join(UPLOAD_FOLDER, upload_filename))
@@ -95,6 +96,18 @@ def process_images(image_directory_path: str) -> List[str]:
         image_urls.append(get_url(s3_object_name))
     os.rmdir(image_directory_path)
     return image_urls
+
+def upload_midi(file_hash: str, midi_filename: str) -> str:
+    '''
+    Uploads a midi file to S3
+    :param midi_filename: Filename (excluding path) of the midi file to upload
+    :returns: S3 url of midi file
+    '''
+    filename = os.path.join(MIDI_FOLDER, midi_filename)
+    s3_object_name = f'midi/{file_hash}.mid'
+    upload_file(filename, s3_object_name)
+    return get_url(s3_object_name)
+
 
 def delete_file(filename: str) -> bool:
     try:
