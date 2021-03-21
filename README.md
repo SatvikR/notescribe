@@ -21,13 +21,25 @@ python3 -m notescribe
 
 | Library/Service                                                                        | Usage                               |
 | -------------------------------------------------------------------------------------- | ----------------------------------- |
-| [Pytorch](https://pytorch.org)                                                         | Provides user with web pages        |
-| [Pydub](https://pydub.com)                                                             | Machine learning models             |
+| [Flask](https://flask.palletsprojects.com)                                             | Provides user with web pages        |
+| [Pytorch](https://pytorch.org)                                                         | Machine learning models             |
+| [Pydub](https://pydub.com)                                                             | Converting audio to WAV format      |
 | [LilyPond](https://lilypond.org)                                                       | Rendering midi as images            |
 | [FPDF for Python](https://pyfpdf.readthedocs.io)                                       | Packaging images as PDF             |
 | [AWS S3](https://aws.amazon.com/s3) and [boto3](https://aws.amazon.com/sdk-for-python) | Asset storage and upload management |
 | [Docker](https://www.docker.com)                                                       | Deployment configuration            |
 | [AWS EC2](https://aws.amazon.com/ec2)                                                  | Website hosting                     |
+
+<!-- - [Flask](https://flask.palletsprojects.com): Provides user with web pages
+- [Pytorch](https://pytorch.org): Machine learning models
+- [Pydub](https://pydub.com): Converting audio to WAV format
+- [LilyPond](https://lilypond.org): Rendering midi as images
+- [FPDF for Python](https://pyfpdf.readthedocs.io): Packaging images as PDF
+- [AWS S3](https://aws.amazon.com/s3) and
+  [boto3](https://aws.amazon.com/sdk-for-python): Asset storage and upload
+  management
+- [Docker](https://www.docker.com): Deployment configuration
+- [AWS EC2](https://aws.amazon.com/ec2): Website hosting -->
 
 ## How it works
 
