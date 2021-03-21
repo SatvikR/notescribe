@@ -40,3 +40,9 @@ and is then rendered as collection of images.
 These images are packaged into a PDF document using FPDF. The PDF document, MIDI file, and generated images are stored in AWS S3 and their URLs are recorded in a json file. That json file is also uploaded to S3.
 
 The user is sent back a URL that points ot the json file in S3, and client side JavaScript renders the images and provides links to download the PDF and MIDI.
+
+## License
+
+Notescribe is licensed under the [Apache License, Version
+2.0.](https://www.apache.org/licenses/LICENSE-2.0.html) See [LICENSE](LICENSE)
+for more details.
