@@ -1,6 +1,9 @@
-# Notescribe
-
-Open source music transcriber made for DVHacks |||
+<p align="center">
+  <img src="https://github.com/SatvikR/notescribe/blob/dev/.github/images/logo.png?raw=true" />
+</p>
+<p align="center">
+  <strong>Open source music transcriber made for DVHacks |||</strong>
+</p>
 
 ## Contributors
 
@@ -16,16 +19,15 @@ python3 -m notescribe
 
 ## Used Services and Libraries
 
-- [Flask](https://flask.palletsprojects.com): Provides user with web pages
-- [Pytorch](https://pytorch.org): Machine learning models
-- [Pydub](https://pydub.com): Converting audio to WAV format
-- [LilyPond](https://lilypond.org): Rendering midi as images
-- [FPDF for Python](https://pyfpdf.readthedocs.io): Packaging images as PDF
-- [AWS S3](https://aws.amazon.com/s3) and
-  [boto3](https://aws.amazon.com/sdk-for-python): Asset storage and upload
-  management
-- [Docker](https://www.docker.com): Deployment configuration
-- [AWS EC2](https://aws.amazon.com/ec2): Website hosting
+| Library/Service                                                                        | Usage                               |
+| -------------------------------------------------------------------------------------- | ----------------------------------- |
+| [Pytorch](https://pytorch.org)                                                         | Provides user with web pages        |
+| [Pydub](https://pydub.com)                                                             | Machine learning models             |
+| [LilyPond](https://lilypond.org)                                                       | Rendering midi as images            |
+| [FPDF for Python](https://pyfpdf.readthedocs.io)                                       | Packaging images as PDF             |
+| [AWS S3](https://aws.amazon.com/s3) and [boto3](https://aws.amazon.com/sdk-for-python) | Asset storage and upload management |
+| [Docker](https://www.docker.com)                                                       | Deployment configuration            |
+| [AWS EC2](https://aws.amazon.com/ec2)                                                  | Website hosting                     |
 
 ## How it works
 
