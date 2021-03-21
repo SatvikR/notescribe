@@ -1,5 +1,6 @@
 from notescribe import settings, UPLOAD_FOLDER, WAV_FOLDER, MIDI_FOLDER, LILYPOND_FOLDER, IMAGES_FOLDER, PDF_FOLDER, JSON_FOLDER
 from notescribe.s3_upload import upload_file, get_url
+from notescribe.ml import wavfile2midifile
 from pydub import AudioSegment
 import subprocess
 import os.path
@@ -77,16 +78,18 @@ def convert_to_midi(file_hash: str, wav_filename: str) -> str:
     # TODO: Call machine learning code
     print(f'Converting file {wav_filename} with hash {file_hash}')
 
-    path_to_input = os.path.join(UPLOAD_FOLDER, wav_filename)
+    path_to_input = os.path.join(WAV_FOLDER, wav_filename)
     output_filename = f'midi_{file_hash}.mid'
     path_to_output = os.path.join(MIDI_FOLDER, output_filename)
 
     if not os.path.isdir(os.path.join(MIDI_FOLDER)):
         os.makedirs(os.path.join(MIDI_FOLDER))
 
-    # Returns a placeholder midi file
-    path_to_placeholder = os.path.join('object_storage', 'placeholder', 'placeholder.mid')
-    shutil.copyfile(path_to_placeholder, path_to_output)
+    # # Returns a placeholder midi file
+    # path_to_placeholder = os.path.join('object_storage', 'placeholder', 'placeholder.mid')
+    # shutil.copyfile(path_to_placeholder, path_to_output)
+
+    wavfile2midifile(path_to_input, path_to_output)
 
     # Return example midi file
     return output_filename
