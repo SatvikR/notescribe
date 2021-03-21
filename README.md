@@ -23,6 +23,7 @@ python3 -m notescribe
 | -------------------------------------------------------------------------------------- | ----------------------------------- |
 | [Flask](https://flask.palletsprojects.com)                                             | Provides user with web pages        |
 | [Pytorch](https://pytorch.org)                                                         | Machine learning models             |
+| [Librosa](https://librosa.org/)                                                        | Music and audio analysis            |
 | [Pydub](https://pydub.com)                                                             | Converting audio to WAV format      |
 | [LilyPond](https://lilypond.org)                                                       | Rendering midi as images            |
 | [FPDF for Python](https://pyfpdf.readthedocs.io)                                       | Packaging images as PDF             |
