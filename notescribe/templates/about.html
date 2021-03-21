@@ -1,8 +1,5 @@
 {% extends 'base.html' %} {% block head %}
-<link
-  rel="stylesheet"
-  href="{{ url_for('static', filename='css/about.css') }}"
-/>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}" />
 {% endblock head %} {% block main %}
 <div class="title">
   <h1>Welcome to Notescribe</h1>
@@ -12,15 +9,7 @@
   <p>
     We are an open source project that aims to make music transcription easy.
   </p>
-  <h2>How does this work?</h2>
-  <p>
-    Notescribe takes your music and runs it through a machine learning model
-    called a transformer, written in pytorch. Our transformer will convert your
-    music into the midi file format. We then take the midi, and convert it to
-    sheet music using lilypond. Then, we upload the sheet music to AWS s3 to
-    store, and give you the files to enjoy.
-  </p>
-  <h2>Contributers</h2>
+  <h2>Contributors</h2>
   <ul>
     <li>
       <a class="contributer" href="https://github.com/SatvikR">Satvik Reddy</a>
@@ -32,5 +21,31 @@
       <a class="contributer" href="https://github.com/soham1053">Soham Patil</a>
     </li>
   </ul>
+  <h2 id="used-services-and-libraries">Used Services and Libraries</h2>
+  <ul>
+    <li><a href="https://flask.palletsprojects.com">Flask</a>: Provides user with web pages</li>
+    <li><a href="https://pytorch.org">Pytorch</a>: Machine learning models</li>
+    <li><a href="https://pydub.com">Pydub</a>: Converting audio to WAV format</li>
+    <li><a href="https://lilypond.org">LilyPond</a>: Rendering midi as images</li>
+    <li><a href="https://pyfpdf.readthedocs.io">FPDF for Python</a>: Packaging images as PDF</li>
+    <li><a href="https://aws.amazon.com/s3">AWS S3</a> and
+      <a href="https://aws.amazon.com/sdk-for-python">boto3</a>: Asset storage and upload
+      management
+    </li>
+    <li><a href="https://www.docker.com">Docker</a>: Deployment configuration</li>
+    <li><a href="https://aws.amazon.com/ec2">AWS EC2</a>: Website hosting</li>
+  </ul>
+  <h2 id="how-it-works">How it works</h2>
+  <p>The user uploads a file to to a website. That file is processed and converted to
+    WAV format. The newly created WAV file is processed by a machine learning
+    algorithm, which generates a MIDI file.</p>
+  <p>The MIDI file is then converted to the intermediate LilyPond (.ly) format using
+    <a href="https://lilypond.org/doc/v2.18/Documentation/usage/invoking-midi2ly.en.html">midi2ly</a>,
+    and is then rendered as collection of images.
+  </p>
+  <p>These images are packaged into a PDF document using FPDF. The PDF document, MIDI file, and generated images are
+    stored in AWS S3 and their URLs are recorded in a json file. That json file is also uploaded to S3.</p>
+  <p>The user is sent back a URL that points ot the json file in S3, and client side JavaScript renders the images and
+    provides links to download the PDF and MIDI.</p>
 </div>
 {% endblock main %}
