@@ -19,17 +19,18 @@ python3 -m notescribe
 
 ## Used Services and Libraries
 
-| Library/Service                                                                        | Usage                               |
-| -------------------------------------------------------------------------------------- | ----------------------------------- |
-| [Flask](https://flask.palletsprojects.com)                                             | Provides user with web pages        |
-| [Pytorch](https://pytorch.org)                                                         | Machine learning models             |
-| [Librosa](https://librosa.org/)                                                        | Music and audio analysis            |
-| [Pydub](https://pydub.com)                                                             | Converting audio to WAV format      |
-| [LilyPond](https://lilypond.org)                                                       | Rendering midi as images            |
-| [FPDF for Python](https://pyfpdf.readthedocs.io)                                       | Packaging images as PDF             |
-| [AWS S3](https://aws.amazon.com/s3) and [boto3](https://aws.amazon.com/sdk-for-python) | Asset storage and upload management |
-| [Docker](https://www.docker.com)                                                       | Deployment configuration            |
-| [AWS EC2](https://aws.amazon.com/ec2)                                                  | Website hosting                     |
+| Library/Service                                                                        | Usage                                   |
+| -------------------------------------------------------------------------------------- | --------------------------------------- |
+| [Flask](https://flask.palletsprojects.com)                                             | Provides user with web pages            |
+| [Pytorch](https://pytorch.org)                                                         | Machine learning models                 |
+| [Librosa](https://librosa.org/)                                                        | Music and audio analysis                |
+| [Pydub](https://pydub.com)                                                             | Converting audio to WAV format          |
+| [LilyPond](https://lilypond.org)                                                       | Rendering midi as images                |
+| [Maestro Dataset](https://magenta.tensorflow.org/datasets/maestro)                     | Music dataset used for machine learning |
+| [FPDF for Python](https://pyfpdf.readthedocs.io)                                       | Packaging images as PDF                 |
+| [AWS S3](https://aws.amazon.com/s3) and [boto3](https://aws.amazon.com/sdk-for-python) | Asset storage and upload management     |
+| [Docker](https://www.docker.com)                                                       | Deployment configuration                |
+| [AWS EC2](https://aws.amazon.com/ec2)                                                  | Website hosting                         |
 
 ## How it works
 
